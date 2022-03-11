@@ -35,3 +35,23 @@ npm run lint
 
 ### Customize configuration
 See [Configuration Reference](https://cli.vuejs.org/config/).
+
+# gun
+```
+// Get ready for gunishment
+var gun = Gun(‘https://gunjs.herokuapp.com/gun');
+
+// Reference a random object and save data to it
+gun.get('random/zfn5sQLy4')
+.put({ hello: ‘world’ });
+
+
+    // Reference an object
+    var ref = gun.get('random/zfn5sQLy4');
+
+    // Print the ref
+    ref.on(function(data) {
+       $('body').text(JSON.stringify(data));
+    });
+
+```
