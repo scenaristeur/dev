@@ -1,2 +1,2 @@
 "use strict";(self["webpackChunkdev"]=self["webpackChunkdev"]||[]).push([[553],{9553:function(e,n,l){l.r(n),l.d(n,{default:function(){return a}});var u=function(){var e=this,n=e.$createElement,l=e._self._c||n;return l("div",[e._v(" Physic World ")])},r=[],t={name:"PhysicWorld"},c=t,s=l(1001),i=(0,s.Z)(c,u,r,!1,null,null,null),a=i.exports}}]);
-//# sourceMappingURL=553-legacy.8b6bd189.js.map
+//# sourceMappingURL=553-legacy.ab74c82f.js.map
