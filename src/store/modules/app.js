@@ -2,6 +2,11 @@
 const state = () => ({
   world: null,
   worlds: [
+    {id: "graph",
+    name: "Graph", status: "enabled", description: "description",
+    img: "http://gist.github.com/vasturiano/02affe306ce445e423f992faeea13521/raw/preview.png",
+    links: [{name: "3D force-directed graph", url : "https://vasturiano.github.io/3d-force-graph/"}]},
+
     {id: "solid",
     name: "Solid", status: "enabled", description: "Your data, your choice. Advancing Web standards to empower people.",
     img: "https://solidproject.org/assets/img/solid-emblem.svg",
@@ -16,10 +21,7 @@ const state = () => ({
     img: "https://enable3d.io/img/enable3d-logo.png",
     links: [{name: "enable3D", url: "https://enable3d.io/" }]},
 
-    {id: "graph",
-    name: "Graph", status: "enabled", description: "description",
-    img: "http://gist.github.com/vasturiano/02affe306ce445e423f992faeea13521/raw/preview.png",
-    links: [{name: "3D force-directed graph", url : "https://vasturiano.github.io/3d-force-graph/"}]},
+
 
     {id: "gun",
     name: "GunDB", status: "enabled", description: "A decentralized database",

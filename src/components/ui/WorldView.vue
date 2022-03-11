@@ -1,6 +1,6 @@
 <template>
   <div>
-    WorldView {{ world }}
+    <!-- WorldView {{ world }} -->
     <GunWorld v-if="world.id == 'gun'" />
     <PhysicWorld v-else-if="world.id == 'physic'" />
     <SolidWorld v-else-if="world.id == 'solid'" />

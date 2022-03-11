@@ -10,10 +10,12 @@
     "postgit": "git push && git subtree push --prefix dist origin gh-pages"
   },
   "dependencies": {
+    "3d-force-graph": "^1.70.9",
     "bootstrap": "^4.5.3",
     "bootstrap-vue": "^2.21.2",
     "core-js": "^3.8.3",
     "register-service-worker": "^1.7.2",
+    "three-spritetext": "^1.6.5",
     "vue": "^2.6.14",
     "vue-i18n": "^8.27.0",
     "vue-router": "^3.5.1",
@@ -22,6 +24,7 @@
   "devDependencies": {
     "@babel/core": "^7.12.16",
     "@babel/eslint-parser": "^7.12.16",
+    "@kazupon/vue-i18n-loader": "^0.5.0",
     "@vue/cli-plugin-babel": "~5.0.0",
     "@vue/cli-plugin-eslint": "~5.0.0",
     "@vue/cli-plugin-pwa": "~5.0.0",
@@ -30,7 +33,6 @@
     "@vue/cli-service": "~5.0.0",
     "eslint": "^7.32.0",
     "eslint-plugin-vue": "^8.0.3",
-    "@kazupon/vue-i18n-loader": "^0.5.0",
     "vue-template-compiler": "^2.6.14"
   }
 }

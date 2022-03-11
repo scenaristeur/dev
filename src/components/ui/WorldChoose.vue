@@ -43,6 +43,9 @@ export default {
       set (/*value*/) { /*this.updateTodo(value)*/ }
     },
   },
+  created (){
+  // process.env.NODE_ENV == "development" ? this.changeWorld(this.worlds[0]) : ""
+  },
   methods:{
     changeWorld(w){
       this.$store.commit('app/setWorld', w)
