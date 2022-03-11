@@ -1,9 +1,18 @@
 <template>
   <div>
     Gun World
-    Working on <b>{{brain.name}}</b> in <b>{{brain.world.id}}</b>
-    <hr>
-    ''{{ brain}}-
+    <div v-if="brain != null">
+      Working on <b>{{brain.name}}</b> in <b>{{brain.world.id}}</b>
+      <hr>
+      {{brain.data}}
+      <hr>
+      {{ brain}}
+    </div>
+    <div v-else>
+      Try to type the command `brain test`, or `brain my`
+    </div>
+    <a href="https://gunjs.herokuapp.com/basic/paste.html" target="_blank">Test page</a>
+
   </div>
 </template>
 

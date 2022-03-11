@@ -4,6 +4,11 @@ const state = () => ({
   brain: null,
   brains: [],
   worlds: [
+    {id: "gun",
+    name: "GunDB", status: "enabled", description: "A decentralized database",
+    img: "https://camo.githubusercontent.com/64213f411349db936a0fa36ef41741b170d4c8d34d1cc0d1c887f7d880838707/68747470733a2f2f636c6475702e636f6d2f5445793979476834356c2e737667",
+    links: [{name: "Doc", url:"https://gun.eco/"}]},
+    
     {id: "graph",
     name: "Graph", status: "enabled", description: "description",
     img: "http://gist.github.com/vasturiano/02affe306ce445e423f992faeea13521/raw/preview.png",
@@ -23,10 +28,7 @@ const state = () => ({
     img: "https://enable3d.io/img/enable3d-logo.png",
     links: [{name: "enable3D", url: "https://enable3d.io/" }]},
 
-    {id: "gun",
-    name: "GunDB", status: "enabled", description: "A decentralized database",
-    img: "https://camo.githubusercontent.com/64213f411349db936a0fa36ef41741b170d4c8d34d1cc0d1c887f7d880838707/68747470733a2f2f636c6475702e636f6d2f5445793979476834356c2e737667",
-    links: [{name: "Doc", url:"https://gun.eco/"}]},
+
 
     {id: "html", name: "Html", status: "todo", description: "a basic html world"},
     {id: "js", name: "JavaScript", status: "todo", description: "some interaction js world"},

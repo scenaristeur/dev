@@ -47,6 +47,7 @@ class Command extends Base {
             alert("Please enter a world to create a brain")
           }else{
             let brain = new Brain({world: this.world, name: this.array[1]})
+            brain.name == undefined || brain.name.length == 0 ? brain.name = brain.id : ""
             brain = await Vue.prototype.$loadBrain(brain)
             console.log(brain)
             this.store.commit('app/setBrain', brain)

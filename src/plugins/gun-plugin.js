@@ -4,16 +4,18 @@ const plugin = {
     console.log(store)
 
     Vue.prototype.$gunGet = async function(brain){
-      brain.data = []
+      let data = []
       let brainNode = Vue.prototype.$gun.get(brain.name)
+      console.log("brainNode", brainNode)
       brainNode.map().on((node, key) => {
         console.log(key, node)
-        brain.data.push({key: key, node: node})
+        data.push({key: key, node: node})
         // add results straight to the Vue component state
         // and get updates when nodes are updated by GUN
         // this.todos[key] = node;
         //  console.log(this.todos)
       });
+      brain.data = data
 
       return brain
     }
