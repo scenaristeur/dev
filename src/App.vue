@@ -1,5 +1,6 @@
 <template>
   <div id="app">
+    <NavBar />
     <nav>
       <router-link to="/">Home</router-link> |
       <router-link to="/about">About</router-link>
@@ -8,6 +9,25 @@
   </div>
 </template>
 
+<script>
+// @ is an alias to /src
+// import HelloWorld from '@/components/HelloWorld.vue'
+// import  'evejs/dist/eve.custom.js';
+// import { AppAgent } from '@/agents/AppAgent.js';
+// import { HelloAgent } from '@/agents/HelloAgent.js';
+// import { SnifferAgent } from '@/agents/SnifferAgent.js';
+
+// import { Brain } from 'neurone-factory'
+
+export default {
+  name: 'DevApp',
+  components: {
+    'NavBar': ()=>import('@/components/ui/NavBar')
+  },
+
+}
+
+</script>
 <style>
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
