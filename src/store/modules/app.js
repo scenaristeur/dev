@@ -43,6 +43,10 @@ const state = () => ({
     {id: "robot", name: "Robots", status: "todo", description: "robots"},
     {id: "ia", name: "IA", status: "todo", description: "ia"},
     {id: "quantique", name: "Informatique Quantique", status: "todo", description: "quantique"},
+    {id: "semapps", name: "Semapps", status: "todo", description: ""},
+    {id: "fediverse", name: "Fediverse", status: "todo", description: ""},
+    {id: "blockchain", name: "Blockchain", status: "todo", description: ""},
+    {id: "crdt", name: "Crdt", status: "todo", description: ""},
   ]
 })
 
