@@ -23,6 +23,19 @@ const plugin = {
 
       console.log("brain with data", brain)
       return brain
+    },
+    Vue.prototype.$addToBrain = async function(command){
+      console.log("command for add ing to brain", command)
+      switch (store.state.app.brain.world.id) {
+        case 'gun':
+        console.log("add to gun")
+        command = await this.$gunAddTriple(command)
+
+        break;
+        default:
+
+      }
+      return command
     }
   }
 }

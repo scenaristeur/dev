@@ -46,15 +46,12 @@ class Command extends Base {
           if(this.world == null){
             alert("Please enter a world to create a brain")
           }else{
-            let brain = new Brain({world: this.world, name: this.array[1]})
-            brain.name == undefined || brain.name.length == 0 ? brain.name = brain.id : ""
-            brain = await Vue.prototype.$loadBrain(brain)
-            console.log(brain)
-            this.store.commit('app/setBrain', brain)
+            this.brain = new Brain({world: this.world, name: this.array[1]})
+            this.brain.name == undefined || this.brain.name.length == 0 ? this.brain.name = this.brain.id : ""
+            this.brain = await Vue.prototype.$loadBrain(this.brain)
+            console.log(this.brain)
+            this.store.commit('app/setBrain', this.brain)
           }
-
-
-
 
           break;
           default:
@@ -71,54 +68,10 @@ class Command extends Base {
 
     }
     this.store.commit('os/pushHistory', this)
-    return this;
-  }
-  init2(){
-    let iv = this.options.inputValue
-    // si commence par http --> type = url
-    if (this.isValidUrl(iv)){
-      this.type = "url";
-      this.value = iv;
-      this.isFile = this.isFile(iv)
-    }else{
-      // selon le premier charactère, on detecte une commande
-      let firstChar = iv.charAt(0);
-      let last =""
-      switch(firstChar){
-        case '/':
-        //    let commande = rdf.quad(rdf.blankNode(), rdf.namedNode('commande'),rdf.literal(message))
-        //  this.catchCommande(message,this.network,this);
-
-        this.type = "commande";
-        this.value = iv;
-        this.inputNew = "";
-        //this.catchCommande(this)
-        break;
-
-        case '.':
-        last = this.commandHistory[this.commandHistory.length-1];
-        this.inputNew = last.s+" "+last.p+" "+last.o;
-        break;
-
-        case ';':
-        last = this.commandHistory[this.commandHistory.length-1];
-        this.inputNew = last.s+" "+last.p+" ";
-        break;
-
-        case ',':
-        last = this.commandHistory[this.commandHistory.length-1];
-        this.inputNew = last.s+" ";
-        break;
-
-
-        default:
-        // si le premier charactère n'indique pas une commande, on traite comme un triplet
-        this.traiteTriplet(iv);
-        //  this.catchTriplet()
-      }
+    console.log(this)
+    if (this.type == "triplet"){
+     await Vue.prototype.$addToBrain(this)
     }
-
-    //si termine par virgule, point, point-virgule, tiret --> triplet
 
     return this;
   }
@@ -185,12 +138,12 @@ class Command extends Base {
       }
       break;
       default:
-      console.log("message to chat "+message)
+      console.log("Oh oh Houston this message should never be shown !  "+message)
       //this.sendMessage(message);
       //  this.agentInput.send('agentSocket', {type: "sendMessage", message:message});
       //  this.catchTriplet(message.slice(0,-1), this.network); // A REMPLACER PAR CATCHTRIPLETS V2
-      inputNew = "";
-      isTriplet = false;
+      // inputNew = "";
+      // isTriplet = false;
     }
     if (isTriplet){
       //  console.log("est Triplet",messageCut)
@@ -210,6 +163,8 @@ class Command extends Base {
     Object.assign(this, result);
     //  return result;
   }
+
+
   isValidUrl(string){
     try {
       new URL(string);
