@@ -1,7 +1,13 @@
 <template>
   <div class="home">
+      <HelloWorld msg="Welcome to Your Vue.js App"/>
+    <WorldChoose v-if="world == null"/>
+    <div v-else>
+      World : {{ world }}
+      <b-button @click="world = null">Leave {{world.name}} world</b-button>
+    </div>
+
     <img alt="Vue logo" src="../assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
   </div>
 </template>
 
@@ -12,7 +18,14 @@ import HelloWorld from '@/components/HelloWorld.vue'
 export default {
   name: 'HomeView',
   components: {
-    HelloWorld
-  }
+    HelloWorld,
+    'WorldChoose': ()=>import('@/components/ui/WorldChoose')
+  },
+  computed:{
+    world:{
+      get () { return this.$store.state.app.world },
+      set (/*value*/) { this.$store.commit('app/setWorld', null) }
+    },
+  },
 }
 </script>
