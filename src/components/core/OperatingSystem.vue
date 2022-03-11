@@ -5,34 +5,18 @@
       <b-input-group-prepend>
         <b-button v-b-modal.modal-history variant="info">></b-button>
       </b-input-group-prepend>
-      <b-input ref="commandInput" v-on:keyup.enter="onEnter" placeholder="type help + 'Enter' for a list of commands" v-model="command"/>
+      <b-input
+      ref="commandInput"
+      v-on:keyup.enter="onEnter"
+      v-on:keydown.tab.prevent="onTab"
+      placeholder="type help + 'Enter' for a list of commands"
+      v-model="command"
+      autofocus/>
     </b-input-group>
-    <b-modal id="modal-history" title="History" size="lg">
-      <b-table hover
-      :items="history"
-      :fields="fields"
-      selectable
-      select-mode="single"
-      responsive="sm"
-      @row-selected="redo"
-      sort-by.sync="date"
-      sort-direction="desc"
-      ></b-table>
 
-    </b-modal>
+    <OsHistory v-on:redo="redo"/>
+    <OsHelp v-on:redo="redo"/>
 
-    <b-modal id="modal-help" title="Help" size="lg">
-      <b-table hover
-      :items="help_items"
-      :fields="help_fields"
-      selectable
-      select-mode="single"
-      responsive="sm"
-      @row-selected="redo"
-      sort-by.sync="name"
-      sort-direction="desc"
-      ></b-table>
-    </b-modal>
   </div>
 </template>
 
@@ -40,24 +24,15 @@
 
 export default {
   name: "OperatingSystem",
+  components: {
+    // HelloWorld,
+    'OsHistory': ()=>import('@/components/core/tools/OsHelp'),
+    'OsHelp': ()=>import('@/components/core/tools/OsHistory'),
+  },
   data(){
     return{
       command : "",
-      message: "",
-      fields: [
-        { key: 'command', label: 'Command', sortable: true },
-        { key: 'result', label: 'Result', sortable: true, class: 'text-right' },
-        { key: 'date', label: 'Date', sortable: true, sortDirection: 'desc' }
-      ],
-      help_items: [
-        {command: "history", action: "show the history", attributes: "none"},
-        {command: "help", action: "show the help", attributes: "none"}
-      ],
-      help_fields: [
-        { key: 'command', label: 'Command', sortable: true },
-        { key: 'action', label: 'Action' },
-        { key: 'attributes', label: 'Attributes' },
-      ]
+      message: ""
     }
   },
   methods:{
@@ -77,9 +52,12 @@ export default {
         this.$bvModal.show("modal-help")
       }
     },
+    onTab(){
+      console.log("should autocomplete")
+    },
     redo(h){
-      // console.log(h)
-      this.$bvModal.hide("modal-history")
+      console.log(h)
+
       this.$bvModal.hide("modal-help")
       this.command = h[0].command
       let app = this
@@ -87,12 +65,6 @@ export default {
         app.$refs.commandInput.focus()
       }, 500);
     }
-  },
-  computed:{
-    history:{
-      get () { return this.$store.state.os.history },
-      set (/*value*/) { }
-    },
   },
 }
 </script>

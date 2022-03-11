@@ -6,9 +6,19 @@ const plugin = {
     console.log(store)
 
     Vue.prototype.$onCommand = async function(command){
-      let result = "done "+command
-      store.commit('os/pushHistory', {command: command, result: result, date: Date.now()})
-      return result
+      let c = {command: command, status: [], result: undefined, date: Date.now()}
+      c.status[Date.now()] = "start"
+      let existWorld = store.state.app.worlds.find(w => w.id == command)
+      if(existWorld != undefined){
+        c.result = "Done: opening "+existWorld.name
+        c.status[Date.now()] = "open "+existWorld.name
+        store.commit('app/setWorld', existWorld)
+      }else{
+        c.result = "done "+command
+      }
+      store.commit('os/pushHistory', c)
+      // console.log(c)
+      return c.result
     }
 
   }
