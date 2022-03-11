@@ -40,7 +40,7 @@
           <b-dropdown-item href="#">Sign Out</b-dropdown-item>
         </b-nav-item-dropdown>
       </b-navbar-nav>
-      <small><i>v0.0.1b</i></small>
+      <small><i>v0.0.1c</i></small>
     </b-collapse>
   </b-navbar>
 </template>

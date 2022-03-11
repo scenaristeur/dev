@@ -1,6 +1,8 @@
 // import Vue from 'vue'
 const state = () => ({
   world: null,
+  brain: null,
+  brains: [],
   worlds: [
     {id: "graph",
     name: "Graph", status: "enabled", description: "description",
@@ -20,8 +22,6 @@ const state = () => ({
     name: "Physic", status: "enabled", description: "A physic 3D world based on enble3D",
     img: "https://enable3d.io/img/enable3d-logo.png",
     links: [{name: "enable3D", url: "https://enable3d.io/" }]},
-
-
 
     {id: "gun",
     name: "GunDB", status: "enabled", description: "A decentralized database",
@@ -55,6 +55,9 @@ const state = () => ({
 const mutations = {
   setWorld(state,w){
     state.world = w
+  },
+  setBrain(state,b){
+    state.brain = b
   },
 }
 

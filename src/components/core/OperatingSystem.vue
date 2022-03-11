@@ -10,7 +10,7 @@
       v-on:keyup.enter="onEnter"
       v-on:keydown.tab.prevent="onTab"
       placeholder="type help + 'Enter' for a list of commands"
-      v-model="command"
+      v-model="c"
       autofocus/>
     </b-input-group>
 
@@ -31,25 +31,20 @@ export default {
   },
   data(){
     return{
-      command : "",
+      c : "",
       message: ""
     }
   },
   methods:{
     async onEnter(){
       // console.log(this.command)
-      let command = this.command.trim()
-      if (command.length > 0){
-        if (command == "history"){
-          this.$bvModal.show("modal-history")
-        }
-        if(command == "help"){
-          this.$bvModal.show("modal-help")
-        }
-        let result = await this.$onCommand(command)
-        this.message = result.result
-
-        this.command = result.inputNew || ""
+      let c = this.c.trim()
+      if (c.length > 0){
+        c = await this.$onCommand(c)
+        if (c.lower == "history"){this.$bvModal.show("modal-history")}
+        if(c.lower == "help"){this.$bvModal.show("modal-help")}
+        this.message = c.result
+        this.c = c.inputNew || ""
       }
       // else{
       //   this.$bvModal.show("modal-help")

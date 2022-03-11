@@ -1,41 +1,44 @@
 <template>
   <div>
     Gun World
+    Working on <b>{{brain.name}}</b> in <b>{{brain.world.id}}</b>
+    <hr>
+    ''{{ brain}}-
   </div>
 </template>
 
 <script>
-import {Brain } from '@/neurone-factory'
+// import {Brain } from '@/neurone-factory'
 export default {
   name: "GunWorld",
   methods:{
-    process(c){
-      let brain = new Brain()
-      switch (c.command) {
-        case "brain":
-
-        if (c.array[1] != undefined){
-          brain.name = c.array[1]
-
-        }else{
-          brain.name = prompt("Please choose a brain name");
-        }
-        console.log(brain)
-        break;
-        default:
-
-      }
-    }
+    // process(c){
+    //   console.log(c)
+    //   // let brain = new Brain()
+    //   // switch (c.command) {
+    //   //   case "brain":
+    //   //
+    //   //   if (c.array[1] != undefined){
+    //   //     brain.name = c.array[1]
+    //   //
+    //   //   }else{
+    //   //     brain.name = prompt("Please choose a brain name");
+    //   //   }
+    //   //   console.log(brain)
+    //   //   break;
+    //   //   default:
+    //   //
+    //   // }
+    // }
   },
   watch:{
-    history(){
-      let last = this.history[this.history.length - 1]
-      this.process(last)
-    }
+    // lastCommand(){
+    //   this.process(this.lastCommand)
+    // }
   },
   computed:{
-    history:{
-      get () { return this.$store.state.os.history },
+    brain:{
+      get () { return this.$store.state.app.brain },
       set (/*value*/) { }
     },
   },

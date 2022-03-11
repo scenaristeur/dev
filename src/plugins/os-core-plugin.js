@@ -1,4 +1,3 @@
-// import * as sc from '@inrupt/solid-client-authn-browser'
 import { Command } from '@/neurone-factory'
 
 const plugin = {
@@ -9,8 +8,21 @@ const plugin = {
     Vue.prototype.$onCommand = async function(command){
       let c = new Command({command: command, store: store})
       console.log("command",c)
-      store.commit('os/pushHistory', c)
+
       return c
+    }
+
+    Vue.prototype.$loadBrain = async function(brain){
+      switch (brain.world.id) {
+        case 'gun':
+        brain = await this.$gunGet(brain)
+        break;
+        default:
+        console.log("todo load ", brain)
+      }
+
+      console.log("brain with data", brain)
+      return brain
     }
   }
 }

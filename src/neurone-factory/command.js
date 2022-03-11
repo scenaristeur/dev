@@ -1,5 +1,6 @@
-
+import Vue from 'vue'
 import { Base } from "./base.js"
+import { Brain } from './brain.js'
 
 export { Command }
 
@@ -14,11 +15,11 @@ class Command extends Base {
     // this.id = uuidv4()
     //console.log(this)
     // ...
-    this.options = options
+    //this.options = options
     this.init()
   }
-  init(){
-    let c = this.options.command
+  async init(){
+    let c = this.command
     if (this.isValidUrl(c)){
       this.type = "url";
       this.value = c;
@@ -31,13 +32,36 @@ class Command extends Base {
       }else{
         this.lower= c.toLowerCase()
         this.array = c.split(' ')
+        this.arrayLower = this.lower.split(' ')
         this.result = undefined
 
-        console.log(this.options)
-        let existWorld = this.options.store.state.app.worlds.find(w => w.id == c)
-        if(existWorld != undefined){
-          this.result = "opening "+existWorld.name
-          this.options.store.commit('app/setWorld', existWorld)
+        switch (this.arrayLower[0]) {
+          case 'leave':
+          this.result = "leaving "
+          this.store.commit('app/setWorld', null)
+          break;
+          case 'brain':
+
+          this.world = this.store.state.app.world
+          if(this.world == null){
+            alert("Please enter a world to create a brain")
+          }else{
+            let brain = new Brain({world: this.world, name: this.array[1]})
+            brain = await Vue.prototype.$loadBrain(brain)
+            console.log(brain)
+            this.store.commit('app/setBrain', brain)
+          }
+
+
+
+
+          break;
+          default:
+          this.existWorld = this.store.state.app.worlds.find(w => w.id == c)
+          if(this.existWorld != undefined){
+            this.result = "opening "+this.existWorld.name
+            this.store.commit('app/setWorld', this.existWorld)
+          }
         }
 
 
@@ -45,6 +69,7 @@ class Command extends Base {
 
 
     }
+    this.store.commit('os/pushHistory', this)
     return this;
   }
   init2(){
