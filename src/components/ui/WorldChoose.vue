@@ -9,18 +9,25 @@
       img-alt="Image"
       img-top
       > -->
+
       <b-card
       v-for="w in worlds" :key="w.id">
+      <b-card-img-lazy v-if="w.img != undefined" :src="w.img" alt="Image" top></b-card-img-lazy>
       <b-card-title>
         {{w.name}}
       </b-card-title>
       <b-card-text>
         {{w.description}}
       </b-card-text>
-      <b-button variant="primary" @click="changeWorld(w)" v-if="w.status == 'enabled'">Open</b-button>
-      <b-card-footer v-else>
-        {{w.status}}
+
+
+      <b-button v-if="w.status == 'enabled'" variant="primary" @click="changeWorld(w)">Open</b-button>
+      <small v-else><i>{{w.status}}</i></small>
+
+      <b-card-footer v-if="w.links != undefined && w.links.length > 0">
+        <a v-for="l in w.links" :key="l.url" :href="l.url" class="card-link" target="_blank">{{l.name}}</a>
       </b-card-footer>
+
     </b-card>
 
   </b-card-group>

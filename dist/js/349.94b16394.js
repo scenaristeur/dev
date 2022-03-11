@@ -1,0 +1,2 @@
+"use strict";(self["webpackChunkdev"]=self["webpackChunkdev"]||[]).push([[349],{1349:function(e,n,u){u.r(n),u.d(n,{default:function(){return d}});var l=function(){var e=this,n=e.$createElement,u=e._self._c||n;return u("div",[e._v(" Gun World ")])},r=[],t={name:"GunWorld"},c=t,s=u(1001),a=(0,s.Z)(c,l,r,!1,null,null,null),d=a.exports}}]);
+//# sourceMappingURL=349.94b16394.js.map

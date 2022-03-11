@@ -1,10 +1,11 @@
 <template>
   <div class="home">
-      <HelloWorld msg="Welcome to Your Vue.js App"/>
+    <HelloWorld msg="Welcome to Your Vue.js App"/>
     <WorldChoose v-if="world == null"/>
     <div v-else>
       World : {{ world }}
       <b-button @click="world = null">Leave {{world.name}} world</b-button>
+      <WorldView />
     </div>
 
     <img alt="Vue logo" src="../assets/logo.png">
@@ -19,7 +20,8 @@ export default {
   name: 'HomeView',
   components: {
     HelloWorld,
-    'WorldChoose': ()=>import('@/components/ui/WorldChoose')
+    'WorldChoose': ()=>import('@/components/ui/WorldChoose'),
+    'WorldView': ()=>import('@/components/ui/WorldView')
   },
   computed:{
     world:{
