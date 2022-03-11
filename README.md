@@ -1,5 +1,18 @@
 # dev
 
+# source code
+- https://github.com/scenaristeur/dev/
+
+# demo
+- https://scenaristeur.github.io/dev/
+
+# projects
+- https://github.com/scenaristeur/dev/projects
+
+# commits
+- https://github.com/scenaristeur/dev/commits/main
+
+
 ## Project setup
 ```
 npm install
