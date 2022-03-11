@@ -46,11 +46,14 @@ export default {
         if(command == "help"){
           this.$bvModal.show("modal-help")
         }
-        this.message = await this.$onCommand(command)
-        this.command = ""
-      }else{
-        this.$bvModal.show("modal-help")
+        let result = await this.$onCommand(command)
+        this.message = result.result
+
+        this.command = result.inputNew || ""
       }
+      // else{
+      //   this.$bvModal.show("modal-help")
+      // }
     },
     onTab(){
       console.log("should autocomplete")
