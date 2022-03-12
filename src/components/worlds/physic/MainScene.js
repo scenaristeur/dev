@@ -97,13 +97,17 @@ export class MainScene extends Scene3D {
     // console.log(scene)
     var intersects = raycaster.intersectObjects( scene.scene.children );
 
+    if(intersects.length>0){
+      let point = intersects[ 0 ].point
+      scene.physics.add.box({x:point.x, y: point.y, z: point.z })
+    }
+
+
+
     for ( var i = 0; i < intersects.length; i++ ) {
       let name = intersects[ i ].object.name
       if(name.length > 0 && name != "ground"){
         console.log( name, intersects[ i ] );
-      }else{
-        let point = intersects[ i ].point
-        scene.physics.add.box({x:point.x, y: point.y, z: point.z })
       }
 
       /*
