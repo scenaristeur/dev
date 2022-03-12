@@ -48,8 +48,8 @@ class Command extends Base {
           }else{
             this.brain = new Brain({world: this.world, name: this.array[1]})
             this.brain.name == undefined || this.brain.name.length == 0 ? this.brain.name = this.brain.id : ""
-            this.brain = await Vue.prototype.$loadBrain(this.brain)
-            console.log(this.brain)
+            // this.brain = await Vue.prototype.$loadBrain(this.brain)
+            // console.log(this.brain)
             this.store.commit('app/setBrain', this.brain)
           }
 

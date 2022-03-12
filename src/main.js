@@ -4,7 +4,9 @@ import './registerServiceWorker'
 import router from './router'
 import store from './store'
 
+
 import VueGun from 'vue-gun';
+
 // import SEA from 'gun/sea'; // Required for SEA functions and user authentication
 // Vue.use(SEA)
 Vue.use(VueGun, {

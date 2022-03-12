@@ -3,22 +3,24 @@ const plugin = {
     let store = opts.store
     console.log(store)
 
-    Vue.prototype.$gunGet = async function(brain){
-      let data = []
-      let brainNode = Vue.prototype.$gun.get(brain.name)
-      console.log("brainNode", brainNode)
-      brainNode.map().on((node, key) => {
-        console.log(key, node)
-        data.push({key: key, node: node})
-        // add results straight to the Vue component state
-        // and get updates when nodes are updated by GUN
-        // this.todos[key] = node;
-        //  console.log(this.todos)
-      });
-      brain.data = data
-
-      return brain
-    }
+  //   Vue.prototype.$gunGet = async function(brain){
+  //   //  let data = []
+  // //  brain.data = []
+  //     let brainNode = Vue.prototype.$gun.get(brain.name)
+  //     console.log("brainNode", brainNode)
+  //     await brainNode.map().on((node, key) => {
+  //       console.log(key, node)
+  //       brain.data[key]= node
+  //       store.commit('app/setBrain', brain)
+  //       // add results straight to the Vue component state
+  //       // and get updates when nodes are updated by GUN
+  //       // this.todos[key] = node;
+  //       //  console.log(this.todos)
+  //     });
+  //   //  brain.data = data
+  //
+  //     return brain
+  //   }
 
     Vue.prototype.$gunAddTriple = async function(command){
       let triple = command.value
@@ -41,7 +43,7 @@ const plugin = {
       // subjectNode[triple.predicate] = objectNode
       // console.log(subjectNode)
       // brainNode.set(subjectNode)
-    //  Vue.prototype.$gunGet(store.state.app.brain)
+      //  Vue.prototype.$gunGet(store.state.app.brain)
     }
   }
 }

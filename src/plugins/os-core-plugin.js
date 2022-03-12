@@ -12,18 +12,18 @@ const plugin = {
       return c
     }
 
-    Vue.prototype.$loadBrain = async function(brain){
-      switch (brain.world.id) {
-        case 'gun':
-        brain = await this.$gunGet(brain)
-        break;
-        default:
-        console.log("todo load ", brain)
-      }
-
-      console.log("brain with data", brain)
-      return brain
-    },
+    // Vue.prototype.$loadBrain = async function(brain){
+    //   switch (brain.world.id) {
+    //     case 'gun':
+    //     brain = await this.$gunGet(brain)
+    //     break;
+    //     default:
+    //     console.log("todo load ", brain)
+    //   }
+    //
+    //   console.log("brain with data", brain)
+    //   return brain
+    // },
     Vue.prototype.$addToBrain = async function(command){
       console.log("command for add ing to brain", command)
       switch (store.state.app.brain.world.id) {
