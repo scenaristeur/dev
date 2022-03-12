@@ -1,6 +1,9 @@
 <template>
   <div>
     <h2>{{ $t('message.chooseWorld') }}</h2>
+
+to do separate FrontEnd & Backend
+
     <b-card-group columns>
 
       <!-- <b-card
