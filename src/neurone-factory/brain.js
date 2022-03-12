@@ -10,6 +10,7 @@ class Brain extends Base {
     super(options)
     options['type'] == undefined ? this['type'] = "brain": ""
     // console.log('factice brain hihihi')
+    this.neurones == undefined ? this.neurones = [] : ""
   }
 
   // createNeurone(options = {}){

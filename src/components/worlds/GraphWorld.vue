@@ -1,186 +1,122 @@
 <template>
   <div>
     Graph World !
-    <b-button-toolbar aria-label="Toolbar with button groups and dropdown menu">
-     <b-button-group class="mx-1">
-     </b-button-group>
-     <b-dropdown class="mx-1" right text="New">
-       <b-dropdown-item>graph</b-dropdown-item>
-       <b-dropdown-item>node</b-dropdown-item>
-       <b-dropdown-item>link</b-dropdown-item>
-     </b-dropdown>
-       <!-- <b-button>New</b-button> -->
-       <b-button>Edit</b-button>
-       <b-button>Undo</b-button>
+    <div v-if="brain != null">
+      Working on <b>{{brain.name}}</b> in <b>{{brain.world.id}}</b>
+      {{nodes.length}} nodes / {{links.length}} links
+    </div>
+    <GraphComponent :nodes="nodes" :links="links" />
+    <!-- <b-button-toolbar aria-label="Toolbar with button groups and dropdown menu">
+    <b-button-group class="mx-1">
+  </b-button-group>
+  <b-dropdown class="mx-1" right text="New">
+  <b-dropdown-item>graph</b-dropdown-item>
+  <b-dropdown-item>node</b-dropdown-item>
+  <b-dropdown-item>link</b-dropdown-item>
+</b-dropdown>
 
-     <b-button-group class="mx-1">
-       <b-button>Save</b-button>
-       <b-button>Cancel</b-button>
-     </b-button-group>
-   </b-button-toolbar>
-    <div id="graph" ref="graph">Loading graph...</div>
-  </div>
+<b-button>Edit</b-button>
+<b-button>Undo</b-button>
+
+<b-button-group class="mx-1">
+<b-button>Save</b-button>
+<b-button>Cancel</b-button>
+</b-button-group>
+</b-button-toolbar> -->
+
+</div>
 </template>
 
 <script>
 
-import ForceGraph3D from '3d-force-graph';
-import SpriteText from 'three-spritetext';
-// node text https://github.com/vasturiano/3d-force-graph/blob/master/example/html-nodes/index.html
-// import '//unpkg.com/three/examples/js/renderers/CSS2DRenderer.js'
-import {CSS2DRenderer, CSS2DObject} from 'three/examples/jsm/renderers/CSS2DRenderer.js';
-
 export default {
   name: "GraphWorld",
+  components: {
+    'GraphComponent': ()=>import('@/components/worlds/graph/GraphComponent'),
+  },
   data(){
     return{
-      Graph: null,
-      nodes: [],
-      links: []
+      // nodes: [],
+      // links: [],
     }
-  },
-  mounted() {
-    this.init()
   },
   methods:{
-    init(){
-      let app = this
-      let elem = this.$refs.graph
-      let width = window.innerWidth/2
-
-      console.log(width)
-
-      this.Graph = ForceGraph3D({
-        extraRenderers: [new CSS2DRenderer()],
-            })(elem)
-      // .backgroundColor("#999999")
-      // .width(width)
-      // .height(400)
-      // .enableNodeDrag(false)
-      // .onNodeClick(this.removeNode)
-      .graphData({nodes: this.nodes, links: this.links})
-      // .dagMode('td')
-      // .dagLevelDistance(100)
-      .nodeLabel('name')
-      .nodeId('url')
-      .nodeColor(node => app.highlightNodes.has(node) ? node === app.hoverNode ? 'rgb(255,0,0,1)' : 'rgba(255,160,0,0.8)' : 'rgba(0,255,255,0.6)')
-      .linkWidth(link => app.highlightLinks.has(link) ? 4 : 1)
-      .linkDirectionalParticles(link => app.highlightLinks.has(link) ? 4 : 0)
-      .linkDirectionalParticleWidth(4)
-      .onNodeHover(node => {
-        // no state change
-
-        if ((!node && !app.highlightNodes.size) || (node && app.hoverNode === node)) return;
-
-        app.highlightNodes.clear();
-        app.highlightLinks.clear();
-        if (node) {
-          //   if (node.neighbors != undefined){
-          console.log(node)
-          app.highlightNodes.add(node);
-          //   node.neighbors.forEach(neighbor => app.highlightNodes.add(neighbor));
-          // node.links.forEach(link => app.highlightLinks.add(link));
-          //}
-        }
-
-        app.hoverNode = node || null;
-
-        app.updateHighlight()
-      })
-      .onLinkHover(link => {
-        app.highlightNodes.clear();
-        app.highlightLinks.clear();
-
-        if (link) {
-          app.highlightLinks.add(link);
-          app.highlightNodes.add(link.source);
-          app.highlightNodes.add(link.target);
-        }
-
-        app.updateHighlight();
-      })
-      .nodeAutoColorBy('type')
-      // .nodeColor(node => this.selectedNodes.has(node) ? 'rgb(255,0,0,1)' : node.color)
-      // .nodeThreeObject(({ url }) => {
-      //
-      //   // if(url == undefined){
-      //   //   url = "root"
-      //   // }
-      //   if (url != undefined && (url.endsWith('.png') || url.endsWith('.jpg') || url.endsWith('.jpeg'))){
-      //     const imgTexture = new THREE.TextureLoader().load(`${url}`);
-      //     const material = new THREE.SpriteMaterial({ map: imgTexture });
-      //     const sprite = new THREE.Sprite(material);
-      //     sprite.scale.set(12, 12);
-      //     return sprite;
-      //   }
-      //
-      // })
-      .nodeThreeObject(node => {
-        const nodeEl = document.createElement('div');
-        nodeEl.textContent = node.name //node.id;
-        nodeEl.style.color = node.color || "#ffffff";
-        nodeEl.className = 'node-label';
-        return new CSS2DObject(nodeEl);
-      })
-      .nodeThreeObjectExtend(true)
-
-      .linkThreeObjectExtend(true)
-      .linkThreeObject(link => {
-        // extend link with text sprite
-        if(link.label != undefined){
-          const sprite = new SpriteText(`${link.label}`);
-          sprite.color = 'lightgrey';
-          sprite.textHeight = 1.5;
-          return sprite;
-        }
-      })
-      .linkDirectionalArrowLength(3.5)
-      .linkDirectionalArrowRelPos(1)
-      //  .linkCurvature(0.25)
-      .linkPositionUpdate((sprite, { start, end }) => {
-        if(sprite != undefined){
-          const middlePos = Object.assign(...['x', 'y', 'z'].map(c => ({
-            [c]: start[c] + (end[c] - start[c]) / 2 // calc middle point
-          })))
-
-
-
-          // Position sprite
-          Object.assign(sprite.position, middlePos);
-        }
-      })
-      .onNodeClick(node => {
-        // Aim at node from outside it
-        //  console.log(node)
-        this.selectedNodes.clear()
-        this.selectedNodes.has(node) ? this.selectedNodes.delete(node) : this.selectedNodes.add(node);
-        console.log(this.selectedNodes)
-        if(node.url != undefined && node.url.startsWith('http')){
-          app.$store.commit ('app/mustExplore', node.url)
-        }
-
-        const distance = 160;
-        const distRatio = 1 + distance/Math.hypot(node.x, node.y, node.z);
-
-        this.Graph.cameraPosition(
-          { x: node.x * distRatio, y: node.y * distRatio, z: node.z * distRatio }, // new position
-          node, // lookAt ({ x, y, z })
-          3000  // ms transition duration
-        );
-        app.$store.commit ('app/setCurrentNode', node)
-      })
-      .onBackgroundClick(event => {
-        console.log("onBackgroundClick", event)
-        //  app.$store.commit('app/setCurrentNode', null)
-        //  app.$bvModal.show("modal-node")
-      })
-      .onBackgroundRightClick(event => {
-        alert("onBackgroundRightClick", event)
-      })
-      console.log(this.Graph)
+    addTriplet(data){
+            let nodeSubject, nodeObject, edge
+      nodeSubject = this.nodeFromLabel(data.value.subject)
+      this.saveNode(nodeSubject)
+      nodeObject = this.nodeFromLabel(data.value.object)
+      this.saveNode(nodeObject)
+      console.log(nodeSubject.id, nodeObject.id)
+      edge = this.edgeFromLabel({source: nodeSubject.id, target: nodeObject.id, label: data.value.predicate})
+      console.log(edge)
+      this.saveEdge(edge)
+      data.triple = {subject: nodeSubject, edge: edge, object: nodeObject}
+      //this.$saveToGun(data)
+    },
+    saveNode(n){
+      var index = this.nodes.findIndex(x => x.id==n.id);
+      index === -1 ? this.nodes.push(n) : Object.assign(this.nodes[index], n)
+      //this.sendUpdate(n)
+    },
+    saveEdge(e){
+      console.log(e)
+      console.log(this.links)
+      this.links.push(e)
+      //  var index = this.links.findIndex(x => x.id==e.id);
+      //index === -1 ? this.links.push(e) : Object.assign(this.links[index], e)
+      console.log(this.nodes, this.links)
+    //  this.sendUpdate(e)
+    },
+    // nodeFromLabelVis(label) {
+    //   return {id: "#"+label.trim().split(' ').join('_'),
+    //   label: label,
+    //   color: {  background: '#D2E5FF', border: '#2B7CE9'},
+    //   shape: 'ellipse'}
+    // },
+    nodeFromLabel(label) {
+      let id = "#"+label.trim().split(' ').join('_')
+      return {id: id , name: label,   age: 0,
+        type: "neurone"/*, color: "#D2E5FF"*//*, type: "storage"*/}
+      },
+      edgeFromLabel(data){
+        console.log(data)
+        return { source: data.source, target: data.target, label: data.label}
+      },
+  },
+  watch:{
+    lastCommand(){
+      console.log(this.lastCommand)
+      switch (this.lastCommand.type) {
+        case 'triplet':
+        this.addTriplet(this.lastCommand)
+        break;
+        case 'url':
+        console.log(this.lastCommand.url)
+        break;
+        default:
+        console.log("TODO",this.lastCommand)
+      }
     }
-
-  }
+  },
+  computed:{
+    nodes:{
+      get () { return this.$store.state.app.brain == null ? [] : this.$store.state.app.brain.neurones },
+      set (/*value*/) { /*this.$store.commit('app/setBrain', value)*/ }
+    },
+    links:{
+      get () { return this.$store.state.app.brain == null ? [] : this.$store.state.app.brain.synapses },
+      set (/*value*/) { /*this.$store.commit('app/setBrain', value)*/ }
+    },
+    brain:{
+      get () { return this.$store.state.app.brain },
+      set (/*value*/) { /*this.$store.commit('app/setBrain', value)*/ }
+    },
+    lastCommand:{
+      get () { return this.$store.state.os.lastCommand },
+      set (/*value*/) { /*this.$store.commit('app/setBrain', value)*/ }
+    }
+  },
 }
 </script>
 

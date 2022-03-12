@@ -3,16 +3,19 @@ const state = () => ({
   world: null,
   brain: null,
   brains: [],
+  currentNode: null,
   worlds: [
-    {id: "gun",
-    name: "GunDB", status: "enabled", description: "A decentralized database",
-    img: "https://camo.githubusercontent.com/64213f411349db936a0fa36ef41741b170d4c8d34d1cc0d1c887f7d880838707/68747470733a2f2f636c6475702e636f6d2f5445793979476834356c2e737667",
-    links: [{name: "Doc", url:"https://gun.eco/"}]},
-    
     {id: "graph",
     name: "Graph", status: "enabled", description: "description",
     img: "http://gist.github.com/vasturiano/02affe306ce445e423f992faeea13521/raw/preview.png",
     links: [{name: "3D force-directed graph", url : "https://vasturiano.github.io/3d-force-graph/"}]},
+
+    {id: "gun",
+    name: "GunDB", status: "enabled", description: "A decentralized database",
+    img: "https://camo.githubusercontent.com/64213f411349db936a0fa36ef41741b170d4c8d34d1cc0d1c887f7d880838707/68747470733a2f2f636c6475702e636f6d2f5445793979476834356c2e737667",
+    links: [{name: "Doc", url:"https://gun.eco/"}]},
+
+
 
     {id: "solid",
     name: "Solid", status: "enabled", description: "Your data, your choice. Advancing Web standards to empower people.",
@@ -61,6 +64,9 @@ const mutations = {
   setBrain(state,b){
     state.brain = b
   },
+  setCurrentNode(state, n){
+  state.currentNode = n
+},
 }
 
 const actions = {

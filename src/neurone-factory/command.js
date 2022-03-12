@@ -1,4 +1,4 @@
-import Vue from 'vue'
+// import Vue from 'vue'
 import { Base } from "./base.js"
 import { Brain } from './brain.js'
 
@@ -69,9 +69,9 @@ class Command extends Base {
     }
     this.store.commit('os/pushHistory', this)
     console.log(this)
-    if (this.type == "triplet"){
-     await Vue.prototype.$addToBrain(this)
-    }
+    // if (this.type == "triplet"){
+    //  await Vue.prototype.$addToBrain(this)
+    // }
 
     return this;
   }

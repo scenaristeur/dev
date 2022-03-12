@@ -47,17 +47,21 @@
     </b-form-radio-group>
 
 
-    {{ neurone.relations}}
+    {{ neurone.relations}} <b-button   @click="editRelation(neurone.relations['#'])">explore</b-button>
 
 
     <b-list-group style="max-height:200px;overflow-y: scroll;">
       <b-list-group-item
-      v-for="(value, name) of neurone.relations"
+      v-for="(value, name) of relations"
       :key="name"
       button
-      @click="editRelation(name)">
+      >
       {{name}}
       : {{value}}
+
+      <!-- <div v-if="name== '#'">{{getRelation(value)}}</div> -->
+
+
     </b-list-group-item>
   </b-list-group>
 
@@ -132,8 +136,8 @@ export default {
       // types: ["object", "string", "number", "boolean", "null" ],
       brain_node : null,
       newProperty: null,
-      propName: ""
-
+      propName: "",
+      relations: {}
     }
   },
   methods:{
@@ -158,7 +162,7 @@ export default {
       let app = this
       let path = n[1]['_']['#']
       console.log(path)
-      this.$gun.get(path).on(function(node){
+      this.$gun.get(path).once(function(node){
         // render it, but only once. No updates.
         console.log(node)
         app.neurone = node
@@ -177,6 +181,22 @@ export default {
     },
     editRelation(n){
       console.log(n)
+      let relations = {}
+      let res =   this.$gun.get(n).map().once(function(node, key){
+        console.log('rs', node, key);
+        relations[key] = node
+
+      })
+      console.log('res',res)
+      console.log("rel",relations)
+
+      this.relations = relations
+    },
+    getRelation(node_id){
+      this.$gun.get(node_id).once(function(node, key){
+        console.log('RELATION Subscribed to ',node_id, node, key);
+
+      })
     },
 
     get(n){
