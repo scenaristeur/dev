@@ -1,15 +1,15 @@
 <template>
   <div>
-  <GraphUi :Graph="Graph" :nodes="nodes" v-on:switch-brain="switchBrain"/>
-  <div id="graph" ref="graph">Loading graph...
+    <GraphUi :Graph="Graph" :nodes="nodes" v-on:switch-brain="switchBrain"/>
+    <div id="graph" ref="graph">Loading graph...
 
-    {{nodes}}
-    <hr>
-    {{links}}
+      {{nodes}}
+      <hr>
+      {{links}}
 
 
+    </div>
   </div>
-</div>
 </template>
 
 <script>
@@ -114,10 +114,10 @@ export default {
       app.updateHighlight();
     })
     .onNodeDragEnd(node => {
-          node.fx = node.x;
-          node.fy = node.y;
-          node.fz = node.z;
-        })  .onNodeClick(node => {
+      node.fx = node.x;
+      node.fy = node.y;
+      node.fz = node.z;
+    })  .onNodeClick(node => {
       // Aim at node from outside it
       //  console.log(node)
       this.selectedNodes.clear()
@@ -139,8 +139,9 @@ export default {
     })
     .onBackgroundClick(event => {
       console.log("onBackgroundClick", event)
-    //  app.$store.commit('app/setCurrentNode', null)
-    //  app.$bvModal.show("modal-node")
+      app.$store.commit('app/setCurrentNode', null)
+      console.log("new")
+      app.$bvModal.show("modal-node")
     })
     .onBackgroundRightClick(event => {
       alert("onBackgroundRightClick", event)
@@ -154,30 +155,30 @@ export default {
       })
     },
     updateHighlight() {
-    // trigger update of highlighted objects in scene
-    this.Graph
-    .nodeColor(this.Graph.nodeColor())
-    .linkWidth(this.Graph.linkWidth())
-    .linkDirectionalParticles(this.Graph.linkDirectionalParticles());
-  },
-  async switchBrain(b){
-  console.log("switch", b)
-  await this.$store.dispatch('nodes/saveNode', b)
-  console.log("must save ", this.Graph.graphData())
-  let {nodes, links} = this.Graph.graphData()
-  for await (const n of nodes){
-    console.log(n)
-    delete n.__threeObj
-    console.log(n)
-    await this.$store.dispatch('nodes/saveNode', n)
-  }
-  console.log(links)
-  // for await (const l of links){
-  //   console.log(l)
-  //   await this.$store.dispatch('nodes/saveNode', n)
-  // }
+      // trigger update of highlighted objects in scene
+      this.Graph
+      .nodeColor(this.Graph.nodeColor())
+      .linkWidth(this.Graph.linkWidth())
+      .linkDirectionalParticles(this.Graph.linkDirectionalParticles());
+    },
+    async switchBrain(b){
+      console.log("switch", b)
+      await this.$store.dispatch('nodes/saveNode', b)
+      console.log("must save ", this.Graph.graphData())
+      let {nodes, links} = this.Graph.graphData()
+      for await (const n of nodes){
+        console.log(n)
+        delete n.__threeObj
+        console.log(n)
+        await this.$store.dispatch('nodes/saveNode', n)
+      }
+      console.log(links)
+      // for await (const l of links){
+      //   console.log(l)
+      //   await this.$store.dispatch('nodes/saveNode', n)
+      // }
 
-},
+    },
   },
   watch:{
     nodes(){
@@ -187,29 +188,29 @@ export default {
       this.update()
     },
     search(){
-    this.highlightNodes.clear()
-    if (this.search.length > 0){
-      // console.log(this.search)
-      this.nodes.forEach(n => {
-        if(n.name.includes(this.search)){
-          this.highlightNodes.add(n);
-          // console.log(this.highlightNodes)
-        }
-      });
+      this.highlightNodes.clear()
+      if (this.search.length > 0){
+        // console.log(this.search)
+        this.nodes.forEach(n => {
+          if(n.name.includes(this.search)){
+            this.highlightNodes.add(n);
+            // console.log(this.highlightNodes)
+          }
+        });
 
 
-      // app.highlightNodes.add(link.source);
+        // app.highlightNodes.add(link.source);
 
+      }
+      this.updateHighlight()
     }
-    this.updateHighlight()
-  }
-},
-computed:{
-  search:{
-    get () { return this.$store.state.app.search },
-    set (/*value*/) { /*this.updateTodo(value)*/ }
   },
-}
+  computed:{
+    search:{
+      get () { return this.$store.state.app.search },
+      set (/*value*/) { /*this.updateTodo(value)*/ }
+    },
+  }
 }
 </script>
 
